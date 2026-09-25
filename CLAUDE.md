@@ -45,7 +45,7 @@ This is a learning project. I want to build it myself, with your guidance.
 
 - Domain statuses: `wishlist | applied | interviewing | offer | rejected | withdrawn | ghosted`
 - Salary: `salary_min` / `salary_max` as integers, whole euros (EUR)
-- Env vars: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` in `.env.local` (never committed)
+- Env vars: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` in `.env.local` (never committed)
 - Generated DB types: `src/types/database.types.ts` (from `supabase gen types typescript`). Don't edit it by hand.
 
 ## Current progress
@@ -53,7 +53,7 @@ This is a learning project. I want to build it myself, with your guidance.
 Update this list as features are finished.
 
 - [x] 1. Supabase project: enum, tables, RLS, status trigger (migration)
-- [ ] 2. Vite project + Vitest/RTL setup, generated types, Supabase client
+- [x] 2. Vite project + Vitest/RTL setup, generated types, Supabase client
 - [ ] 3. Auth: session context, email/password, Google OAuth, protected route
 - [ ] 4. Applications service + TanStack Query hooks, with tests
 - [ ] 5. List view → form modal (create/edit) → delete
