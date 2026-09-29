@@ -1,3 +1,21 @@
+import { Navigate, Route, Routes } from "react-router";
+import ProtectedRoute from "./components/ProtectedRoute";
+import DashboardPage from "./pages/DashboardPage";
+import LoginPage from "./pages/LoginPage";
+
 export default function App() {
-  return <h1 className="text-4xl text-cyan-700 font-bold">Job Tracker</h1>;
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
 }
