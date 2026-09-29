@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+/* Custom animation for the rotating-lines spinner: a full turn in twelve
+   jumps, one per line, so the lines stay in place and the fade moves. */
+@theme {
+  --animate-spin-steps: spin-steps 1s steps(12, end) infinite;
+
+  @keyframes spin-steps {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
 /* The app is dark-only. color-scheme tells the browser too, so native
    controls, scrollbars and autofill render dark as well. */
 @layer base {
