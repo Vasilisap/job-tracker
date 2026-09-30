@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { signOut } from "../services/auth.service";
+import { useApplications } from "../hooks/useApplications";
+import Spinner from "../components/Spinner";
 
 export default function DashboardPage() {
   const { session } = useAuth();
+  const { data: applications, isPending, error: loadError } = useApplications();
   const [error, setError] = useState<string | null>(null);
 
   const email = session?.user.email ?? "";
@@ -19,6 +22,43 @@ export default function DashboardPage() {
           : "Something went wrong with signing out.",
       );
     }
+  }
+
+  function renderApplications() {
+    if (isPending)
+      return (
+        <div className="flex justify-center py-16">
+          <Spinner />
+        </div>
+      );
+
+    if (loadError)
+      return (
+        <p
+          role="alert"
+          className="rounded-lg bg-red-950/60 px-3 py-2 text-sm text-red-300 ring-1 ring-red-900"
+        >
+          {loadError.message}
+        </p>
+      );
+    if (applications && applications.length === 0)
+      return (
+        <div className="rounded-2xl border border-dashed border-slate-800 bg-slate-900/50 px-6 py-16 text-center">
+          <p className="font-medium text-slate-200">No applications yet</p>
+        </div>
+      );
+
+    if (applications)
+      return (
+        <ul className="divide-y divide-slate-800 overflow-hidden rounded-2xl bg-slate-900 ring-1 ring-slate-800">
+          {applications.map((app) => (
+            <li key={app.id} className="px-5 py-4 hover:bg-slate-800/50">
+              <p className="font-medium text-white">{app.company}</p>
+              <p className="mt-0.5 text-sm text-slate-400">{app.role}</p>
+            </li>
+          ))}
+        </ul>
+      );
   }
 
   return (
@@ -75,12 +115,7 @@ export default function DashboardPage() {
           </button>
         </div>
 
-        <section className="mt-8 rounded-2xl border border-dashed border-slate-800 bg-slate-900/50 px-6 py-16 text-center">
-          <p className="font-medium text-slate-200">No applications yet</p>
-          <p className="mt-1 text-sm text-slate-400">
-            Your applications will appear here.
-          </p>
-        </section>
+        <section className="mt-8">{renderApplications()}</section>
       </main>
     </div>
   );
