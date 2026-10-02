@@ -1,5 +1,5 @@
-import type { Tables } from "../types/database.types";
-import type { Application } from "../types/applications";
+import type { Tables, TablesInsert } from "../types/database.types";
+import type { Application, NewApplication } from "../types/applications";
 import { supabase } from "../lib/supabase";
 
 export type ApplicationRow = Tables<"applications">;
@@ -21,6 +21,20 @@ export function toApplication(row: ApplicationRow): Application {
   };
 }
 
+export function toRow(input: NewApplication): TablesInsert<"applications"> {
+  return {
+    company: input.company,
+    role: input.role,
+    status: input.status,
+    applied_at: input.appliedAt,
+    job_url: input.jobUrl,
+    location: input.location,
+    salary_min: input.salaryMin,
+    salary_max: input.salaryMax,
+    notes: input.notes,
+  };
+}
+
 export async function getApplications(): Promise<Application[]> {
   const { data, error } = await supabase
     .from("applications")
@@ -30,4 +44,44 @@ export async function getApplications(): Promise<Application[]> {
   if (error) throw error;
 
   return data.map(toApplication);
+}
+
+export async function createApplication(
+  input: NewApplication,
+): Promise<Application> {
+  const row = toRow(input);
+
+  const { data, error } = await supabase
+    .from("applications")
+    .insert(row)
+    .select()
+    .single();
+
+  if (error) throw error;
+
+  return toApplication(data);
+}
+
+export async function updateApplication(
+  id: string,
+  input: NewApplication,
+): Promise<Application> {
+  const row = toRow(input);
+
+  const { error, data } = await supabase
+    .from("applications")
+    .update(row)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) throw error;
+
+  return toApplication(data);
+}
+
+export async function deleteApplication(id: string): Promise<void> {
+  const { error } = await supabase.from("applications").delete().eq("id", id);
+
+  if (error) throw error;
 }

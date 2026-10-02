@@ -1,11 +1,12 @@
 import { useState } from "react";
+import Spinner from "../components/Spinner";
+import { useApplications } from "../hooks/useApplications";
 import { useAuth } from "../hooks/useAuth";
 import { signOut } from "../services/auth.service";
-import { useApplications } from "../hooks/useApplications";
-import Spinner from "../components/Spinner";
 
 export default function DashboardPage() {
   const { session } = useAuth();
+
   const { data: applications, isPending, error: loadError } = useApplications();
   const [error, setError] = useState<string | null>(null);
 

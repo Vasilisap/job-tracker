@@ -1,4 +1,9 @@
-import { toApplication, type ApplicationRow } from "./applications.service";
+import type { NewApplication } from "../types/applications";
+import {
+  toApplication,
+  type ApplicationRow,
+  toRow,
+} from "./applications.service";
 
 vi.mock("../lib/supabase");
 
@@ -33,6 +38,34 @@ describe("toApplication", () => {
       notes: null,
       createdAt: "2026-09-24T13:36:45Z",
       updatedAt: "2026-09-24T13:46:04Z",
+    });
+  });
+});
+
+describe("toRow", () => {
+  it("maps a NewApplication to a database row", () => {
+    const input: NewApplication = {
+      company: "Revolut",
+      role: "Frontend Engineer",
+      status: "applied",
+      appliedAt: "2026-09-24",
+      jobUrl: null,
+      location: "Limassol",
+      salaryMin: 45000,
+      salaryMax: 60000,
+      notes: null,
+    };
+
+    expect(toRow(input)).toEqual({
+      company: "Revolut",
+      role: "Frontend Engineer",
+      status: "applied",
+      applied_at: "2026-09-24",
+      job_url: null,
+      location: "Limassol",
+      salary_min: 45000,
+      salary_max: 60000,
+      notes: null,
     });
   });
 });

@@ -23,3 +23,8 @@ export type Application = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type NewApplication = Omit<
+  Application,
+  "id" | "createdAt" | "updatedAt"
+>;
