@@ -55,7 +55,7 @@ Update this list as features are finished.
 - [x] 1. Supabase project: enum, tables, RLS, status trigger (migration)
 - [x] 2. Vite project + Vitest/RTL setup, generated types, Supabase client
 - [x] 3. Auth: session context, email/password, Google OAuth, protected route
-- [ ] 4. Applications service + TanStack Query hooks, with tests
+- [x] 4. Applications service + TanStack Query hooks, with tests
 - [ ] 5. List view → form modal (create/edit) → delete
 - [ ] 6. Filtering by status, sorting by date
 - [ ] 7. Deploy to Netlify
