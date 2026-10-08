@@ -3,6 +3,7 @@ import Spinner from "../components/Spinner";
 import { useApplications } from "../hooks/useApplications";
 import { useAuth } from "../hooks/useAuth";
 import { signOut } from "../services/auth.service";
+import ApplicationList from "../components/ApplicationList";
 
 export default function DashboardPage() {
   const { session } = useAuth();
@@ -49,17 +50,7 @@ export default function DashboardPage() {
         </div>
       );
 
-    if (applications)
-      return (
-        <ul className="divide-y divide-slate-800 overflow-hidden rounded-2xl bg-slate-900 ring-1 ring-slate-800">
-          {applications.map((app) => (
-            <li key={app.id} className="px-5 py-4 hover:bg-slate-800/50">
-              <p className="font-medium text-white">{app.company}</p>
-              <p className="mt-0.5 text-sm text-slate-400">{app.role}</p>
-            </li>
-          ))}
-        </ul>
-      );
+    if (applications) return <ApplicationList applications={applications} />;
   }
 
   return (
