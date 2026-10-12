@@ -1,5 +1,6 @@
 import z from "zod";
 import { Constants } from "../types/database.types";
+import type { Application } from "../types/applications";
 
 const optionalText = z
   .string()
@@ -45,3 +46,30 @@ export const applicationSchema = z
 
 export type ApplicationFormInput = z.input<typeof applicationSchema>;
 export type ApplicationFormOutput = z.output<typeof applicationSchema>;
+
+export function toFormValues(application?: Application): ApplicationFormInput {
+  if (!application)
+    return {
+      company: "",
+      role: "",
+      status: "applied",
+      appliedAt: "",
+      jobUrl: "",
+      location: "",
+      salaryMin: "",
+      salaryMax: "",
+      notes: "",
+    };
+
+  return {
+    company: application.company,
+    role: application.role,
+    status: application.status,
+    appliedAt: application.appliedAt ?? "",
+    jobUrl: application.jobUrl ?? "",
+    location: application.location ?? "",
+    salaryMin: String(application.salaryMin ?? ""),
+    salaryMax: String(application.salaryMax ?? ""),
+    notes: application.notes ?? "",
+  };
+}

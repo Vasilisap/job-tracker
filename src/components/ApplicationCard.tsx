@@ -4,8 +4,10 @@ import StatusBadge from "./StatusBadge";
 
 export default function ApplicationCard({
   application,
+  onEdit,
 }: {
   application: Application;
+  onEdit: () => void;
 }) {
   const appliedOn = formatDate(application.appliedAt);
   const salary = formatSalary(application.salaryMin, application.salaryMax);
@@ -23,8 +25,16 @@ export default function ApplicationCard({
             {application.role}
           </p>
         </div>
-        <div className="shrink-0">
+        <div className="flex shrink-0 items-center gap-3">
           <StatusBadge status={application.status} />
+          <button
+            type="button"
+            onClick={onEdit}
+            aria-label={`Edit ${application.company} application`}
+            className="cursor-pointer rounded-lg px-2.5 py-1 text-sm font-medium text-slate-400 hover:bg-slate-800 hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
+          >
+            Edit
+          </button>
         </div>
       </div>
 

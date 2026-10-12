@@ -4,12 +4,17 @@ import { useApplications } from "../hooks/useApplications";
 import { useAuth } from "../hooks/useAuth";
 import { signOut } from "../services/auth.service";
 import ApplicationList from "../components/ApplicationList";
+import ApplicationFormModal from "../components/ApplicationFormModal";
+import type { Application } from "../types/applications";
 
 export default function DashboardPage() {
   const { session } = useAuth();
-
   const { data: applications, isPending, error: loadError } = useApplications();
+
   const [error, setError] = useState<string | null>(null);
+  const [formTarget, setFormTarget] = useState<Application | "new" | null>(
+    null,
+  );
 
   const email = session?.user.email ?? "";
 
@@ -50,7 +55,13 @@ export default function DashboardPage() {
         </div>
       );
 
-    if (applications) return <ApplicationList applications={applications} />;
+    if (applications)
+      return (
+        <ApplicationList
+          onEdit={(app) => setFormTarget(app)}
+          applications={applications}
+        />
+      );
   }
 
   return (
@@ -99,14 +110,19 @@ export default function DashboardPage() {
           </div>
           <button
             type="button"
-            disabled
-            title="Coming in step 5"
-            className="rounded-lg bg-cyan-700 px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+            onClick={() => setFormTarget("new")}
+            className="cursor-pointer rounded-lg bg-cyan-700 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-600 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 focus-visible:outline-none"
           >
             New application
           </button>
         </div>
 
+        {formTarget !== null && (
+          <ApplicationFormModal
+            onClose={() => setFormTarget(null)}
+            application={formTarget === "new" ? undefined : formTarget}
+          />
+        )}
         <section className="mt-8">{renderApplications()}</section>
       </main>
     </div>
