@@ -5,9 +5,11 @@ import StatusBadge from "./StatusBadge";
 export default function ApplicationCard({
   application,
   onEdit,
+  onDelete,
 }: {
   application: Application;
   onEdit: () => void;
+  onDelete: () => void;
 }) {
   const appliedOn = formatDate(application.appliedAt);
   const salary = formatSalary(application.salaryMin, application.salaryMax);
@@ -25,7 +27,7 @@ export default function ApplicationCard({
             {application.role}
           </p>
         </div>
-        <div className="flex shrink-0 items-center gap-3">
+        <div className="flex shrink-0 items-center gap-1">
           <StatusBadge status={application.status} />
           <button
             type="button"
@@ -34,6 +36,14 @@ export default function ApplicationCard({
             className="cursor-pointer rounded-lg px-2.5 py-1 text-sm font-medium text-slate-400 hover:bg-slate-800 hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
           >
             Edit
+          </button>
+          <button
+            type="button"
+            onClick={onDelete}
+            aria-label={`Delete ${application.company} application`}
+            className="cursor-pointer rounded-lg px-2.5 py-1 text-sm font-medium text-slate-400 hover:bg-red-950/60 hover:text-red-300 focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:outline-none"
+          >
+            Delete
           </button>
         </div>
       </div>

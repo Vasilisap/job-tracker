@@ -1,20 +1,30 @@
 import { useState } from "react";
+import ApplicationFormModal from "../components/ApplicationFormModal";
+import ApplicationList from "../components/ApplicationList";
 import Spinner from "../components/Spinner";
-import { useApplications } from "../hooks/useApplications";
+import {
+  useApplications,
+  useDeleteApplication,
+} from "../hooks/useApplications";
 import { useAuth } from "../hooks/useAuth";
 import { signOut } from "../services/auth.service";
-import ApplicationList from "../components/ApplicationList";
-import ApplicationFormModal from "../components/ApplicationFormModal";
 import type { Application } from "../types/applications";
+import ConfirmDialog from "../components/ConfirmDialog";
 
 export default function DashboardPage() {
   const { session } = useAuth();
   const { data: applications, isPending, error: loadError } = useApplications();
+  const {
+    mutate: deleteApp,
+    isPending: isDeleting,
+    error: deleteError,
+  } = useDeleteApplication();
 
   const [error, setError] = useState<string | null>(null);
   const [formTarget, setFormTarget] = useState<Application | "new" | null>(
     null,
   );
+  const [deleteTarget, setDeleteTarget] = useState<Application | null>(null);
 
   const email = session?.user.email ?? "";
 
@@ -59,6 +69,7 @@ export default function DashboardPage() {
       return (
         <ApplicationList
           onEdit={(app) => setFormTarget(app)}
+          onDelete={(app) => setDeleteTarget(app)}
           applications={applications}
         />
       );
@@ -123,6 +134,24 @@ export default function DashboardPage() {
             application={formTarget === "new" ? undefined : formTarget}
           />
         )}
+
+        {deleteTarget !== null && (
+          <ConfirmDialog
+            title="Delete application?"
+            message={`${deleteTarget.company} - ${deleteTarget.role} will be deleted. This can't be undone.`}
+            confirmLabel="Delete"
+            pendingLabel="Deleting..."
+            isPending={isDeleting}
+            error={deleteError?.message}
+            onConfirm={() =>
+              deleteApp(deleteTarget.id, {
+                onSuccess: () => setDeleteTarget(null),
+              })
+            }
+            onCancel={() => setDeleteTarget(null)}
+          />
+        )}
+
         <section className="mt-8">{renderApplications()}</section>
       </main>
     </div>

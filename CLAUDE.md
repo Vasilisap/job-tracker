@@ -56,7 +56,7 @@ Update this list as features are finished.
 - [x] 2. Vite project + Vitest/RTL setup, generated types, Supabase client
 - [x] 3. Auth: session context, email/password, Google OAuth, protected route
 - [x] 4. Applications service + TanStack Query hooks, with tests
-- [ ] 5. List view → form modal (create/edit) → delete
+- [x] 5. List view → form modal (create/edit) → delete
 - [ ] 6. Filtering by status, sorting by date
 - [ ] 7. Deploy to Netlify
 - [ ] 8. v2 features (incl. light/dark mode toggle)
