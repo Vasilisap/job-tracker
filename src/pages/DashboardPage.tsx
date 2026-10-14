@@ -10,6 +10,15 @@ import { useAuth } from "../hooks/useAuth";
 import { signOut } from "../services/auth.service";
 import type { Application } from "../types/applications";
 import ConfirmDialog from "../components/ConfirmDialog";
+import { useSearchParams } from "react-router";
+import {
+  filterAndSort,
+  parseListParams,
+  type SortOrder,
+  type StatusFilterValue,
+} from "../lib/applicationFilters";
+import StatusFilter from "../components/StatusFilter";
+import SortSelect from "../components/SortSelect";
 
 export default function DashboardPage() {
   const { session } = useAuth();
@@ -20,6 +29,8 @@ export default function DashboardPage() {
     error: deleteError,
   } = useDeleteApplication();
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { status, sort } = parseListParams(searchParams);
   const [error, setError] = useState<string | null>(null);
   const [formTarget, setFormTarget] = useState<Application | "new" | null>(
     null,
@@ -67,13 +78,55 @@ export default function DashboardPage() {
 
     if (applications)
       return (
-        <ApplicationList
-          onEdit={(app) => setFormTarget(app)}
-          onDelete={(app) => setDeleteTarget(app)}
-          applications={applications}
-        />
+        <>
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+            <StatusFilter value={status} onChange={handleStatusChange} />
+            <SortSelect value={sort} onChange={handleSortChange} />
+          </div>
+          {visibleApplications.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-slate-800 bg-slate-900/50 px-6 py-16 text-center">
+              <p className="font-medium text-slate-200">
+                No applications match this filter
+              </p>
+              <button
+                type="button"
+                onClick={() => handleStatusChange("all")}
+                className="mt-3 cursor-pointer rounded text-sm font-medium text-cyan-400 hover:text-cyan-300 hover:underline focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
+              >
+                Show all applications
+              </button>
+            </div>
+          ) : (
+            <ApplicationList
+              onEdit={(app) => setFormTarget(app)}
+              onDelete={(app) => setDeleteTarget(app)}
+              applications={visibleApplications}
+            />
+          )}
+        </>
       );
   }
+
+  function handleStatusChange(next: StatusFilterValue) {
+    setSearchParams((params) => {
+      if (next === "all") params.delete("status");
+      else params.set("status", next);
+      return params;
+    });
+  }
+
+  function handleSortChange(next: SortOrder) {
+    setSearchParams((params) => {
+      if (next === "newest") params.delete("sort");
+      else params.set("sort", next);
+
+      return params;
+    });
+  }
+
+  const visibleApplications = applications
+    ? filterAndSort(applications, { status, sort })
+    : [];
 
   return (
     <div className="min-h-screen">
