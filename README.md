@@ -4,7 +4,9 @@ A personal job application tracker. Log every application, move it through a sta
 
 Built as a learning project with a deliberately strict, layered frontend architecture on a React + Supabase stack.
 
-> **Status:** in active development. Core features are complete; deployment to Netlify is next.
+**Live demo: [jobtrapper.netlify.app](https://jobtrapper.netlify.app)**
+
+> **Status:** core features are complete and deployed. Version 2 features are next.
 
 ## Features
 
@@ -28,7 +30,7 @@ Built as a learning project with a deliberately strict, layered frontend archite
 | Routing              | [React Router](https://reactrouter.com) 8                                                                            |
 | Forms and validation | [react-hook-form](https://react-hook-form.com) + [Zod](https://zod.dev) 4                                            |
 | Testing              | [Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) |
-| Hosting              | [Netlify](https://www.netlify.com) (planned)                                                                         |
+| Hosting              | [Netlify](https://www.netlify.com)                                                                                   |
 
 ## Architecture
 
@@ -153,7 +155,7 @@ supabase/
 
 ## Roadmap
 
-- [ ] Deploy to Netlify
+- [x] Deploy to Netlify
 - [ ] Status timeline for each application, from the events table
 - [ ] Contacts and interview rounds
 - [ ] Kanban board with drag and drop between statuses
