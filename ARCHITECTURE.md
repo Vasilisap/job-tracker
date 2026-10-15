@@ -1,4 +1,4 @@
-# Job Tracker — Architecture & Plan
+# Job Trapper — Architecture & Plan
 
 As of Sep 24, 2026 · Vasilis Apostolou
 

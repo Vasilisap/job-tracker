@@ -7,6 +7,7 @@ import {
 import { useAuth } from "../hooks/useAuth";
 import { Navigate } from "react-router";
 import { FullPageSpinner } from "../components/Spinner";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const { session, loading } = useAuth();
@@ -26,9 +27,11 @@ export default function LoginPage() {
     try {
       if (mode === "signIn") {
         await signInWithPassword({ email, password });
+        toast.success("Signed in");
       } else {
         const { session } = await signUp({ email, password });
         if (!session) setNotice("Check your email to confirm your account.");
+        else toast.success("Account created");
       }
     } catch (err) {
       setError(
@@ -70,7 +73,7 @@ export default function LoginPage() {
   return (
     <main className="flex min-h-screen items-center justify-center px-4">
       <div className="w-full max-w-sm rounded-2xl bg-slate-900 p-8 shadow-lg ring-1 ring-slate-800">
-        <h1 className="text-2xl font-bold text-white">Job Tracker</h1>
+        <h1 className="text-2xl font-bold text-white">Job Trapper</h1>
         <p className="mt-1 text-sm text-slate-400">
           {mode === "signIn" ? "Sign in" : "Create an account"} to track your
           applications.

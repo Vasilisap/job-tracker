@@ -1,10 +1,12 @@
-# Job Tracker
+# Job Trapper
 
 A personal job application tracker. Log every application, move it through a status pipeline from wishlist to offer, and see where each one stands.
 
 Built as a learning project with a deliberately strict, layered frontend architecture on a React + Supabase stack.
 
 **Live demo: [jobtrapper.netlify.app](https://jobtrapper.netlify.app)**
+
+![The Job Trapper dashboard: applications as cards with status badges, filter pills and a sort control](docs/job-trapper-screenshot.png)
 
 > **Status:** core features are complete and deployed. Version 2 features are next.
 

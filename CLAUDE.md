@@ -1,4 +1,4 @@
-# Job Tracker — Claude Code instructions
+# Job Trapper — Claude Code instructions
 
 Read `docs/ARCHITECTURE.md` at the start of every session. It holds the full plan: stack, data model, folder structure and build order.
 
