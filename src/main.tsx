@@ -6,6 +6,7 @@ import { AuthProvider } from "./context/AuthProvider.tsx";
 import "./index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "sonner";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,12 @@ createRoot(document.getElementById("root")!).render(
           buttonPosition="bottom-left"
         />
         <AuthProvider>
+          <Toaster
+            theme="dark"
+            position="top-center"
+            richColors
+            duration={3000}
+          />
           <App />
         </AuthProvider>
       </QueryClientProvider>

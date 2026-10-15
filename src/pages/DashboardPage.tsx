@@ -19,6 +19,7 @@ import {
 } from "../lib/applicationFilters";
 import StatusFilter from "../components/StatusFilter";
 import SortSelect from "../components/SortSelect";
+import { toast } from "sonner";
 
 export default function DashboardPage() {
   const { session } = useAuth();
@@ -31,6 +32,7 @@ export default function DashboardPage() {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const { status, sort } = parseListParams(searchParams);
+
   const [error, setError] = useState<string | null>(null);
   const [formTarget, setFormTarget] = useState<Application | "new" | null>(
     null,
@@ -43,6 +45,7 @@ export default function DashboardPage() {
     setError(null);
     try {
       await signOut();
+      toast.success("Signed out");
     } catch (err) {
       setError(
         err instanceof Error
@@ -132,7 +135,7 @@ export default function DashboardPage() {
     <div className="min-h-screen">
       <header className="sticky top-0 z-10 border-b border-slate-800 bg-slate-950/80 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
-          <span className="text-lg font-bold text-white">Job Tracker</span>
+          <span className="text-lg font-bold text-white">Job Trapper</span>
 
           <div className="flex items-center gap-3">
             <span
@@ -196,11 +199,15 @@ export default function DashboardPage() {
             pendingLabel="Deleting..."
             isPending={isDeleting}
             error={deleteError?.message}
-            onConfirm={() =>
+            onConfirm={() => {
+              const deleteCompany = deleteTarget.company;
               deleteApp(deleteTarget.id, {
-                onSuccess: () => setDeleteTarget(null),
-              })
-            }
+                onSuccess: () => {
+                  setDeleteTarget(null);
+                  toast.success(`${deleteCompany} deleted`);
+                },
+              });
+            }}
             onCancel={() => setDeleteTarget(null)}
           />
         )}
