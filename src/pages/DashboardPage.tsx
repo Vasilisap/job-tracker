@@ -1,5 +1,5 @@
-import { useState } from "react";
-import ApplicationFormModal from "../components/ApplicationFormModal";
+import { lazy, Suspense, useState } from "react";
+
 import ApplicationList from "../components/ApplicationList";
 import Spinner from "../components/Spinner";
 import {
@@ -20,6 +20,10 @@ import {
 import StatusFilter from "../components/StatusFilter";
 import SortSelect from "../components/SortSelect";
 import { toast } from "sonner";
+
+const ApplicationFormModal = lazy(
+  () => import("../components/ApplicationFormModal"),
+);
 
 export default function DashboardPage() {
   const { session } = useAuth();
@@ -185,10 +189,12 @@ export default function DashboardPage() {
         </div>
 
         {formTarget !== null && (
-          <ApplicationFormModal
-            onClose={() => setFormTarget(null)}
-            application={formTarget === "new" ? undefined : formTarget}
-          />
+          <Suspense fallback={null}>
+            <ApplicationFormModal
+              onClose={() => setFormTarget(null)}
+              application={formTarget === "new" ? undefined : formTarget}
+            />
+          </Suspense>
         )}
 
         {deleteTarget !== null && (
