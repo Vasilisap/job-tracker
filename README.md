@@ -15,9 +15,10 @@ Built as a learning project with a deliberately strict, layered frontend archite
 - **Accounts**: sign up and sign in with email and password, or with Google.
 - **Applications**: create, edit and delete applications with company, role, status, applied date, job URL, location, salary range (EUR) and notes.
 - **Status pipeline**: Wishlist → Applied → Interviewing → Offer, or Rejected, Withdrawn or Ghosted.
-- **Status history**: every status change is recorded automatically by the database, ready for a per-application timeline.
+- **Status history**: every status change is recorded automatically by the database, and each application has a timeline showing how it got where it is.
 - **Filtering and sorting**: filter by status and sort by applied date. Both are kept in the URL, so they survive a refresh and work with the back button.
 - **Validation**: required fields, valid URLs, whole-euro salaries, and a minimum salary that can't exceed the maximum.
+- **Feedback**: short notifications confirm each action, such as saving, deleting and signing in.
 - **Private by default**: each user only ever sees their own applications, enforced by the database.
 
 ## Tech stack
@@ -31,6 +32,7 @@ Built as a learning project with a deliberately strict, layered frontend archite
 | Server state         | [TanStack Query](https://tanstack.com/query) 5                                                                       |
 | Routing              | [React Router](https://reactrouter.com) 8                                                                            |
 | Forms and validation | [react-hook-form](https://react-hook-form.com) + [Zod](https://zod.dev) 4                                            |
+| Notifications        | [Sonner](https://sonner.emilkowal.ski)                                                                               |
 | Testing              | [Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) |
 | Hosting              | [Netlify](https://www.netlify.com)                                                                                   |
 
@@ -58,6 +60,8 @@ flowchart LR
 - **Server state and client state are kept apart.** Data from Supabase lives in TanStack Query. UI state, such as which modal is open, lives in components. React Context is used only for the auth session.
 - **The Zod schema is the source of the form's types.** Form input and output types are derived from it, and its output type matches the domain type exactly.
 - **Filter and sort live in the URL**, not in component state, so a filtered view can be refreshed and bookmarked.
+- **Code is split so visitors download only what they use.** Each page loads separately, and the form, with Zod and react-hook-form, loads only when it is first opened.
+- **Times and dates are formatted differently on purpose.** An applied date is a calendar date, shown the same everywhere; a status change is a moment, shown in the viewer's own time zone.
 - **Schema changes are versioned migrations** in `supabase/migrations/`, never manual dashboard edits.
 
 ## Data model
@@ -158,7 +162,7 @@ supabase/
 ## Roadmap
 
 - [x] Deploy to Netlify
-- [ ] Status timeline for each application, from the events table
+- [x] Status timeline for each application, from the events table
 - [ ] Contacts and interview rounds
 - [ ] Kanban board with drag and drop between statuses
 - [ ] Stats, such as response rate and time to first reply
