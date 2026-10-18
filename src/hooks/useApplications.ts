@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createApplication,
   deleteApplication,
+  getApplicationEvents,
   getApplications,
   updateApplication,
 } from "../services/applications.service";
@@ -13,6 +14,13 @@ export function useApplications() {
   return useQuery({
     queryKey: applicationsKey,
     queryFn: getApplications,
+  });
+}
+
+export function useApplicationEvents(applicationId: string) {
+  return useQuery({
+    queryKey: [...applicationsKey, applicationId, "events"],
+    queryFn: () => getApplicationEvents(applicationId),
   });
 }
 

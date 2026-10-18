@@ -28,3 +28,11 @@ export type NewApplication = Omit<
   Application,
   "id" | "createdAt" | "updatedAt"
 >;
+
+export type ApplicationEvent = {
+  id: string;
+  applicationId: string;
+  fromStatus: ApplicationStatus | null;
+  toStatus: ApplicationStatus;
+  changedAt: string;
+};

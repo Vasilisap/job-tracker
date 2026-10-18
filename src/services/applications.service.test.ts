@@ -3,6 +3,8 @@ import {
   toApplication,
   type ApplicationRow,
   toRow,
+  type ApplicationEventRow,
+  toApplicationEvent,
 } from "./applications.service";
 
 vi.mock("../lib/supabase");
@@ -66,6 +68,26 @@ describe("toRow", () => {
       salary_min: 45000,
       salary_max: 60000,
       notes: null,
+    });
+  });
+});
+
+describe("toApplicationEvent", () => {
+  it("maps a database row event to application event", () => {
+    const row: ApplicationEventRow = {
+      id: "app-event-1",
+      application_id: "app-1",
+      from_status: null,
+      to_status: "interviewing",
+      changed_at: "2026-10-09 13:10:08.858212+00",
+    };
+
+    expect(toApplicationEvent(row)).toEqual({
+      id: "app-event-1",
+      applicationId: "app-1",
+      fromStatus: null,
+      toStatus: "interviewing",
+      changedAt: "2026-10-09 13:10:08.858212+00",
     });
   });
 });

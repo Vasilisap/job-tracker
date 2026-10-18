@@ -1,4 +1,4 @@
-import { formatDate, formatSalary } from "./format";
+import { formatDate, formatDateTime, formatSalary } from "./format";
 
 describe("formatSalary", () => {
   it.each([
@@ -15,5 +15,13 @@ describe("formatDate", () => {
   it("should format date correctly", () => {
     expect(formatDate("2023-01-01")).toBe("1 Jan 2023");
     expect(formatDate(null)).toBeNull();
+  });
+});
+
+describe("formatDateTime", () => {
+  it("should format dateTime correctly", () => {
+    expect(formatDateTime("2026-10-15T21:45:00+00:00")).toBe(
+      "15 Oct 2026, 21:45",
+    );
   });
 });

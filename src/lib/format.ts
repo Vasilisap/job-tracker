@@ -11,6 +11,14 @@ const dateFormat = new Intl.DateTimeFormat("en-IE", {
   timeZone: "UTC",
 });
 
+const dateTimeFormat = new Intl.DateTimeFormat("en-IE", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+});
+
 export function formatSalary(
   min: number | null,
   max: number | null,
@@ -26,4 +34,8 @@ export function formatSalary(
 export function formatDate(date: string | null): string | null {
   if (!date) return null;
   return dateFormat.format(new Date(date));
+}
+
+export function formatDateTime(date: string) {
+  return dateTimeFormat.format(new Date(date));
 }

@@ -1,8 +1,13 @@
 import type { Tables, TablesInsert } from "../types/database.types";
-import type { Application, NewApplication } from "../types/applications";
+import type {
+  Application,
+  ApplicationEvent,
+  NewApplication,
+} from "../types/applications";
 import { supabase } from "../lib/supabase";
 
 export type ApplicationRow = Tables<"applications">;
+export type ApplicationEventRow = Tables<"application_events">;
 
 export function toApplication(row: ApplicationRow): Application {
   return {
@@ -18,6 +23,16 @@ export function toApplication(row: ApplicationRow): Application {
     notes: row.notes,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
+  };
+}
+
+export function toApplicationEvent(row: ApplicationEventRow): ApplicationEvent {
+  return {
+    id: row.id,
+    applicationId: row.application_id,
+    fromStatus: row.from_status,
+    toStatus: row.to_status,
+    changedAt: row.changed_at,
   };
 }
 
@@ -44,6 +59,20 @@ export async function getApplications(): Promise<Application[]> {
   if (error) throw error;
 
   return data.map(toApplication);
+}
+
+export async function getApplicationEvents(
+  applicationId: string,
+): Promise<ApplicationEvent[]> {
+  const { data, error } = await supabase
+    .from("application_events")
+    .select("*")
+    .eq("application_id", applicationId)
+    .order("changed_at", { ascending: true });
+
+  if (error) throw error;
+
+  return data.map(toApplicationEvent);
 }
 
 export async function createApplication(

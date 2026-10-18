@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { formatDate, formatSalary } from "../lib/format";
 import type { Application } from "../types/applications";
 import StatusBadge from "./StatusBadge";
+import ApplicationTimeline from "./ApplicationTimeline";
 
 export default function ApplicationCard({
   application,
@@ -11,6 +13,8 @@ export default function ApplicationCard({
   onEdit: () => void;
   onDelete: () => void;
 }) {
+  const [showHistory, setShowHistory] = useState(false);
+
   const appliedOn = formatDate(application.appliedAt);
   const salary = formatSalary(application.salaryMin, application.salaryMax);
   const location = application.location;
@@ -18,8 +22,8 @@ export default function ApplicationCard({
 
   return (
     <article className="rounded-2xl bg-slate-900 p-5 ring-1 ring-slate-800 transition hover:ring-slate-700">
-      <div className="flex items-start justify-between gap-4">
-        <div className="min-w-0">
+      <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+        <div className="min-w-0 flex-1 basis-48">
           <h2 className="truncate font-semibold text-white">
             {application.company}
           </h2>
@@ -27,7 +31,7 @@ export default function ApplicationCard({
             {application.role}
           </p>
         </div>
-        <div className="flex shrink-0 items-center gap-1">
+        <div className="flex flex-wrap items-center gap-1">
           <StatusBadge status={application.status} />
           <button
             type="button"
@@ -36,6 +40,15 @@ export default function ApplicationCard({
             className="cursor-pointer rounded-lg px-2.5 py-1 text-sm font-medium text-slate-400 hover:bg-slate-800 hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
           >
             Edit
+          </button>
+          <button
+            type="button"
+            onClick={() => setShowHistory((open) => !open)}
+            aria-expanded={showHistory}
+            aria-label={`${showHistory ? "Hide" : "Show"} ${application.company} history`}
+            className="cursor-pointer rounded-lg px-2.5 py-1 text-sm font-medium text-slate-400 hover:bg-slate-800 hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
+          >
+            {showHistory ? "Hide history" : "History"}
           </button>
           <button
             type="button"
@@ -69,6 +82,15 @@ export default function ApplicationCard({
             </div>
           )}
         </dl>
+      )}
+
+      {showHistory && (
+        <section
+          aria-label={`${application.company} history`}
+          className="mt-5 border-t border-slate-800 pt-5"
+        >
+          <ApplicationTimeline applicationId={application.id} />
+        </section>
       )}
     </article>
   );

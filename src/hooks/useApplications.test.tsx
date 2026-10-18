@@ -3,10 +3,19 @@ import { act, renderHook, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
 import {
   createApplication,
+  getApplicationEvents,
   getApplications,
 } from "../services/applications.service";
-import type { Application, NewApplication } from "../types/applications";
-import { useApplications, useCreateApplication } from "./useApplications";
+import type {
+  Application,
+  ApplicationEvent,
+  NewApplication,
+} from "../types/applications";
+import {
+  useApplicationEvents,
+  useApplications,
+  useCreateApplication,
+} from "./useApplications";
 
 vi.mock("../services/applications.service");
 
@@ -35,6 +44,14 @@ const app: Application = {
   notes: null,
   createdAt: "2026-09-24T13:36:45Z",
   updatedAt: "2026-09-24T13:46:04Z",
+};
+
+const appEvent: ApplicationEvent = {
+  id: "app-event-1",
+  applicationId: "app-1",
+  changedAt: "2026-09-24T13:36:45.000000+00:00",
+  fromStatus: null,
+  toStatus: "interviewing",
 };
 
 describe("useApplications", () => {
@@ -95,5 +112,22 @@ describe("useCreateApplication", () => {
     expect(vi.mocked(createApplication).mock.calls[0][0]).toEqual(input);
 
     expect(invalidate).toHaveBeenCalledWith({ queryKey: ["applications"] });
+  });
+});
+
+describe("useApplicationEvents", () => {
+  it("should return the application events from the service", async () => {
+    vi.mocked(getApplicationEvents).mockResolvedValue([appEvent]);
+
+    const { result } = renderHook(
+      () => useApplicationEvents(appEvent.applicationId),
+      {
+        wrapper: createWrapper(),
+      },
+    );
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data).toEqual([appEvent]);
+    expect(getApplicationEvents).toHaveBeenCalledWith("app-1");
   });
 });
