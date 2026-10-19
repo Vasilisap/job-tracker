@@ -4,7 +4,7 @@ import { Constants } from "../types/database.types";
 
 // aria-pressed drives the selected look, so the style always matches the state
 const pillClass =
-  "cursor-pointer rounded-full px-3 py-1 text-sm font-medium text-slate-300 ring-1 ring-slate-700 hover:bg-slate-800 hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none aria-pressed:bg-cyan-700 aria-pressed:text-white aria-pressed:ring-cyan-600 aria-pressed:hover:bg-cyan-600";
+  "cursor-pointer rounded-full px-3 py-1 text-sm font-medium text-fg-soft ring-1 ring-line-strong hover:bg-raised hover:text-fg-strong focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none aria-pressed:bg-cyan-700 aria-pressed:text-white aria-pressed:ring-cyan-600 aria-pressed:hover:bg-cyan-600";
 
 export default function StatusFilter({
   value,

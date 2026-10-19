@@ -1,3 +1,4 @@
+import ThemeToggle from "../components/ThemeToggle";
 import { useState, type SyntheticEvent } from "react";
 import {
   signInWithPassword,
@@ -71,10 +72,13 @@ export default function LoginPage() {
         : "Create account";
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-4">
-      <div className="w-full max-w-sm rounded-2xl bg-slate-900 p-8 shadow-lg ring-1 ring-slate-800">
-        <h1 className="text-2xl font-bold text-white">Job Trapper</h1>
-        <p className="mt-1 text-sm text-slate-400">
+    <main className="relative flex min-h-screen items-center justify-center px-4">
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
+      </div>
+      <div className="w-full max-w-sm rounded-2xl bg-surface p-8 shadow-lg ring-1 ring-line">
+        <h1 className="text-2xl font-bold text-fg-strong">Job Trapper</h1>
+        <p className="mt-1 text-sm text-muted">
           {mode === "signIn" ? "Sign in" : "Create an account"} to track your
           applications.
         </p>
@@ -83,7 +87,7 @@ export default function LoginPage() {
           <div className="space-y-1.5">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-slate-300"
+              className="block text-sm font-medium text-fg-soft"
             >
               Email
             </label>
@@ -94,14 +98,14 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               autoComplete="email"
-              className="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-slate-100 placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
+              className="block w-full rounded-lg border border-line-strong bg-field px-3 py-2 text-fg placeholder-hint focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
             />
           </div>
 
           <div className="space-y-1.5">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-slate-300"
+              className="block text-sm font-medium text-fg-soft"
             >
               Password
             </label>
@@ -115,20 +119,20 @@ export default function LoginPage() {
                 mode === "signIn" ? "current-password" : "new-password"
               }
               minLength={mode === "signUp" ? 8 : undefined}
-              className="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-slate-100 placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
+              className="block w-full rounded-lg border border-line-strong bg-field px-3 py-2 text-fg placeholder-hint focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
             />
           </div>
 
           <button
             type="submit"
             disabled={submitting}
-            className="w-full rounded-lg bg-cyan-700 px-4 py-2.5 font-semibold text-white hover:bg-cyan-600 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
+            className="w-full rounded-lg bg-cyan-700 px-4 py-2.5 font-semibold text-white hover:bg-cyan-600 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
           >
             {submitLabel}
           </button>
         </form>
 
-        <p className="mt-4 text-center text-sm text-slate-400">
+        <p className="mt-4 text-center text-sm text-muted">
           {mode === "signIn"
             ? "Don't have an account?"
             : "Already have an account?"}{" "}
@@ -139,22 +143,22 @@ export default function LoginPage() {
               setError(null);
               setNotice(null);
             }}
-            className="cursor-pointer rounded font-medium text-cyan-400 hover:text-cyan-300 hover:underline focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
+            className="cursor-pointer rounded font-medium text-cyan-700 dark:text-cyan-400 hover:text-cyan-800 dark:hover:text-cyan-300 hover:underline focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
           >
             {mode === "signIn" ? "Sign up" : "Sign in"}
           </button>
         </p>
 
         <div className="my-6 flex items-center gap-3" aria-hidden="true">
-          <span className="h-px flex-1 bg-slate-800" />
-          <span className="text-xs text-slate-500 uppercase">or</span>
-          <span className="h-px flex-1 bg-slate-800" />
+          <span className="h-px flex-1 bg-raised" />
+          <span className="text-xs text-subtle uppercase">or</span>
+          <span className="h-px flex-1 bg-raised" />
         </div>
 
         <button
           type="button"
           onClick={handleGoogle}
-          className="flex w-full items-center justify-center gap-3 rounded-lg border border-slate-700 bg-slate-800 px-4 py-2.5 font-medium text-slate-100 hover:bg-slate-700 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none cursor-pointer"
+          className="flex w-full items-center justify-center gap-3 rounded-lg border border-line-strong bg-raised px-4 py-2.5 font-medium text-fg hover:bg-raised-hover focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface focus-visible:outline-none cursor-pointer"
         >
           <svg viewBox="0 0 48 48" className="h-5 w-5" aria-hidden="true">
             <path
@@ -179,7 +183,7 @@ export default function LoginPage() {
         {error && (
           <p
             role="alert"
-            className="mt-4 rounded-lg bg-red-950/60 px-3 py-2 text-sm text-red-300 ring-1 ring-red-900"
+            className="mt-4 rounded-lg bg-red-50 dark:bg-red-950/60 px-3 py-2 text-sm text-red-700 dark:text-red-300 ring-1 ring-red-200 dark:ring-red-900"
           >
             {error}
           </p>
@@ -187,7 +191,7 @@ export default function LoginPage() {
         {notice && (
           <p
             role="status"
-            className="mt-4 rounded-lg bg-cyan-950/60 px-3 py-2 text-sm text-cyan-300 ring-1 ring-cyan-900"
+            className="mt-4 rounded-lg bg-cyan-50 dark:bg-cyan-950/60 px-3 py-2 text-sm text-cyan-800 dark:text-cyan-300 ring-1 ring-cyan-200 dark:ring-cyan-900"
           >
             {notice}
           </p>

@@ -17,7 +17,7 @@ import type { Application } from "../types/applications";
 import { toast } from "sonner";
 
 const inputClass =
-  "block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none aria-invalid:border-red-500";
+  "block w-full rounded-lg border border-line-strong bg-field px-3 py-2 text-sm text-fg placeholder-hint focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none aria-invalid:border-red-500";
 
 /** A label, its control, and the control's error message, stacked. */
 function Field({
@@ -35,12 +35,12 @@ function Field({
 }) {
   return (
     <div className={`space-y-1.5 ${className}`}>
-      <label htmlFor={id} className="block text-sm font-medium text-slate-300">
+      <label htmlFor={id} className="block text-sm font-medium text-fg-soft">
         {label}
       </label>
       {children}
       {error && (
-        <p role="alert" className="text-xs text-red-400">
+        <p role="alert" className="text-xs text-red-600 dark:text-red-400">
           {error}
         </p>
       )}
@@ -110,11 +110,11 @@ export default function ApplicationFormModal({
       ref={dialogRef}
       onClose={onClose}
       aria-labelledby="application-form-title"
-      className="m-auto max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-slate-900 p-6 text-slate-100 shadow-xl ring-1 ring-slate-800 backdrop:bg-slate-950/70 backdrop:backdrop-blur-sm"
+      className="m-auto max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-surface p-6 text-fg shadow-xl ring-1 ring-line backdrop:bg-slate-950/70 backdrop:backdrop-blur-sm"
     >
       <h2
         id="application-form-title"
-        className="text-lg font-semibold text-white"
+        className="text-lg font-semibold text-fg-strong"
       >
         {isEditing ? "Edit application" : "New application"}
       </h2>
@@ -249,7 +249,7 @@ export default function ApplicationFormModal({
         {saveError && (
           <p
             role="alert"
-            className="rounded-lg bg-red-950/60 px-3 py-2 text-sm text-red-300 ring-1 ring-red-900 sm:col-span-2"
+            className="rounded-lg bg-red-50 dark:bg-red-950/60 px-3 py-2 text-sm text-red-700 dark:text-red-300 ring-1 ring-red-200 dark:ring-red-900 sm:col-span-2"
           >
             {saveError.message ??
               "An error occurred while saving the application."}
@@ -260,14 +260,14 @@ export default function ApplicationFormModal({
           <button
             type="button"
             onClick={onClose}
-            className="cursor-pointer rounded-lg border border-slate-700 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none"
+            className="cursor-pointer rounded-lg border border-line-strong px-4 py-2 text-sm font-medium text-fg hover:bg-raised focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface focus-visible:outline-none"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={isSaving}
-            className="cursor-pointer rounded-lg bg-cyan-700 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-600 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60"
+            className="cursor-pointer rounded-lg bg-cyan-700 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-600 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isSaving ? "Saving..." : isEditing ? "Save changes" : "Save"}
           </button>

@@ -32,17 +32,20 @@ export default function ConfirmDialog({
       ref={dialogRef}
       onClose={onCancel}
       aria-labelledby="confirm-dialog-title"
-      className="m-auto w-full max-w-md rounded-2xl bg-slate-900 p-6 text-slate-100 shadow-xl ring-1 ring-slate-800 backdrop:bg-slate-950/70 backdrop:backdrop-blur-sm"
+      className="m-auto w-full max-w-md rounded-2xl bg-surface p-6 text-fg shadow-xl ring-1 ring-line backdrop:bg-slate-950/70 backdrop:backdrop-blur-sm"
     >
-      <h2 id="confirm-dialog-title" className="text-lg font-semibold text-white">
+      <h2
+        id="confirm-dialog-title"
+        className="text-lg font-semibold text-fg-strong"
+      >
         {title}
       </h2>
-      <p className="mt-2 text-sm text-slate-400">{message}</p>
+      <p className="mt-2 text-sm text-muted">{message}</p>
 
       {error && (
         <p
           role="alert"
-          className="mt-4 rounded-lg bg-red-950/60 px-3 py-2 text-sm text-red-300 ring-1 ring-red-900"
+          className="mt-4 rounded-lg bg-red-50 dark:bg-red-950/60 px-3 py-2 text-sm text-red-700 dark:text-red-300 ring-1 ring-red-200 dark:ring-red-900"
         >
           {error}
         </p>
@@ -53,7 +56,7 @@ export default function ConfirmDialog({
           type="button"
           onClick={onCancel}
           autoFocus
-          className="cursor-pointer rounded-lg border border-slate-700 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none"
+          className="cursor-pointer rounded-lg border border-line-strong px-4 py-2 text-sm font-medium text-fg hover:bg-raised focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface focus-visible:outline-none"
         >
           Cancel
         </button>
@@ -61,7 +64,7 @@ export default function ConfirmDialog({
           type="button"
           onClick={onConfirm}
           disabled={isPending}
-          className="cursor-pointer rounded-lg bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-600 focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60"
+          className="cursor-pointer rounded-lg bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-600 focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isPending ? pendingLabel : confirmLabel}
         </button>

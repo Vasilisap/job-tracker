@@ -1,8 +1,9 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
-/* Custom animation for the rotating-lines spinner: a full turn in twelve
-   jumps, one per line, so the lines stay in place and the fade moves. */
 @theme {
+  /* Custom animation for the rotating-lines spinner: a full turn in twelve
+     jumps, one per line, so the lines stay in place and the fade moves. */
   --animate-spin-steps: spin-steps 1s steps(12, end) infinite;
 
   @keyframes spin-steps {
@@ -10,16 +11,57 @@
       transform: rotate(360deg);
     }
   }
+
+  /* Colour roles. Components use these (bg-surface, text-muted, …) instead of
+     fixed colours, so each theme is defined once, here. Light values first. */
+  --color-page: var(--color-slate-50); /* page background */
+  --color-surface: var(--color-white); /* cards, modals, dialogs */
+  --color-raised: var(
+    --color-slate-100
+  ); /* hover backgrounds, secondary buttons */
+  --color-raised-hover: var(--color-slate-200); /* hover on a raised element */
+  --color-field: var(--color-white); /* text inputs and selects */
+  --color-line: var(--color-slate-200); /* card outlines, dividers */
+  --color-line-strong: var(
+    --color-slate-300
+  ); /* input borders, outlined buttons */
+  --color-fg-strong: var(--color-slate-900); /* headings */
+  --color-fg: var(--color-slate-800); /* normal text */
+  --color-fg-soft: var(--color-slate-700); /* labels, detail values */
+  --color-muted: var(--color-slate-600); /* secondary text */
+  --color-subtle: var(--color-slate-500); /* small labels, hints */
+  --color-hint: var(--color-slate-400); /* input placeholders */
 }
 
-/* The app is dark-only. color-scheme tells the browser too, so native
-   controls, scrollbars and autofill render dark as well. */
 @layer base {
+  /* Dark values for the same roles: exactly the colours the app used before. */
+  .dark {
+    --color-page: var(--color-slate-950);
+    --color-surface: var(--color-slate-900);
+    --color-raised: var(--color-slate-800);
+    --color-raised-hover: var(--color-slate-700);
+    --color-field: var(--color-slate-800);
+    --color-line: var(--color-slate-800);
+    --color-line-strong: var(--color-slate-700);
+    --color-fg-strong: var(--color-white);
+    --color-fg: var(--color-slate-100);
+    --color-fg-soft: var(--color-slate-300);
+    --color-muted: var(--color-slate-400);
+    --color-subtle: var(--color-slate-500);
+    --color-hint: var(--color-slate-500);
+  }
+
+  /* color-scheme makes the browser's own parts (scrollbars, date picker,
+     autofill) match the theme. */
   html {
+    color-scheme: light;
+  }
+
+  html.dark {
     color-scheme: dark;
   }
 
   body {
-    @apply bg-slate-950 text-slate-100 antialiased;
+    @apply bg-page text-fg antialiased;
   }
 }

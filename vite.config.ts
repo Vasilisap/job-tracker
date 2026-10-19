@@ -12,5 +12,6 @@ export default defineConfig({
     setupFiles: ["src/test/setup.ts"],
     globals: true,
     env: { TZ: "UTC" },
+    execArgv: ["--no-experimental-webstorage"],
   },
 });

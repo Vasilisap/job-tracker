@@ -20,6 +20,7 @@ import {
 import StatusFilter from "../components/StatusFilter";
 import SortSelect from "../components/SortSelect";
 import { toast } from "sonner";
+import ThemeToggle from "../components/ThemeToggle";
 
 const ApplicationFormModal = lazy(
   () => import("../components/ApplicationFormModal"),
@@ -71,15 +72,15 @@ export default function DashboardPage() {
       return (
         <p
           role="alert"
-          className="rounded-lg bg-red-950/60 px-3 py-2 text-sm text-red-300 ring-1 ring-red-900"
+          className="rounded-lg bg-red-50 dark:bg-red-950/60 px-3 py-2 text-sm text-red-700 dark:text-red-300 ring-1 ring-red-200 dark:ring-red-900"
         >
           {loadError.message}
         </p>
       );
     if (applications && applications.length === 0)
       return (
-        <div className="rounded-2xl border border-dashed border-slate-800 bg-slate-900/50 px-6 py-16 text-center">
-          <p className="font-medium text-slate-200">No applications yet</p>
+        <div className="rounded-2xl border border-dashed border-line bg-surface/50 px-6 py-16 text-center">
+          <p className="font-medium text-fg">No applications yet</p>
         </div>
       );
 
@@ -91,14 +92,14 @@ export default function DashboardPage() {
             <SortSelect value={sort} onChange={handleSortChange} />
           </div>
           {visibleApplications.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-slate-800 bg-slate-900/50 px-6 py-16 text-center">
-              <p className="font-medium text-slate-200">
+            <div className="rounded-2xl border border-dashed border-line bg-surface/50 px-6 py-16 text-center">
+              <p className="font-medium text-fg">
                 No applications match this filter
               </p>
               <button
                 type="button"
                 onClick={() => handleStatusChange("all")}
-                className="mt-3 cursor-pointer rounded text-sm font-medium text-cyan-400 hover:text-cyan-300 hover:underline focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
+                className="mt-3 cursor-pointer rounded text-sm font-medium text-cyan-700 dark:text-cyan-400 hover:text-cyan-800 dark:hover:text-cyan-300 hover:underline focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
               >
                 Show all applications
               </button>
@@ -137,24 +138,25 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-10 border-b border-slate-800 bg-slate-950/80 backdrop-blur">
+      <header className="sticky top-0 z-10 border-b border-line bg-page/80 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
-          <span className="text-lg font-bold text-white">Job Trapper</span>
+          <span className="text-lg font-bold text-fg-strong">Job Trapper</span>
 
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <span
               aria-hidden="true"
               className="flex h-8 w-8 items-center justify-center rounded-full bg-cyan-700 text-sm font-semibold text-white uppercase"
             >
               {email.charAt(0)}
             </span>
-            <span className="hidden text-sm text-slate-300 sm:inline">
+            <span className="hidden text-sm text-fg-soft sm:inline">
               {email}
             </span>
             <button
               type="button"
               onClick={handleSignOut}
-              className="rounded-lg border border-slate-700 px-3 py-1.5 text-sm font-medium text-slate-200 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 focus-visible:outline-none"
+              className="rounded-lg border border-line-strong px-3 py-1.5 text-sm font-medium text-fg hover:bg-raised focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-page focus-visible:outline-none"
             >
               Sign out
             </button>
@@ -166,7 +168,7 @@ export default function DashboardPage() {
         {error && (
           <p
             role="alert"
-            className="mb-6 rounded-lg bg-red-950/60 px-3 py-2 text-sm text-red-300 ring-1 ring-red-900"
+            className="mb-6 rounded-lg bg-red-50 dark:bg-red-950/60 px-3 py-2 text-sm text-red-700 dark:text-red-300 ring-1 ring-red-200 dark:ring-red-900"
           >
             {error}
           </p>
@@ -174,15 +176,15 @@ export default function DashboardPage() {
 
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-white">Applications</h1>
-            <p className="mt-1 text-sm text-slate-400">
+            <h1 className="text-2xl font-bold text-fg-strong">Applications</h1>
+            <p className="mt-1 text-sm text-muted">
               Track every job from wishlist to offer.
             </p>
           </div>
           <button
             type="button"
             onClick={() => setFormTarget("new")}
-            className="cursor-pointer rounded-lg bg-cyan-700 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-600 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 focus-visible:outline-none"
+            className="cursor-pointer rounded-lg bg-cyan-700 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-600 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-page focus-visible:outline-none"
           >
             New application
           </button>
