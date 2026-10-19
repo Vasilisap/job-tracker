@@ -51,7 +51,7 @@ Every choice below is decided.
 | Server state | TanStack Query | Caching, refetching, optimistic updates without hand-written `useEffect` |
 | Forms | react-hook-form + Zod | One Zod schema gives both validation and TS types |
 | Routing | React Router | Login, dashboard and a protected-route wrapper |
-| Client state | React Context (auth session only) | Server state lives in TanStack Query, so no Redux or Zustand |
+| Client state | React Context (auth session and theme only) | Server state lives in TanStack Query, so no Redux or Zustand |
 | Testing | Vitest + React Testing Library | Runs on Vite's config; tests components the way users use them |
 | Hosting | Netlify | Needs a `/* /index.html 200` redirect so React Router routes work on refresh |
 

@@ -19,6 +19,7 @@ Built as a learning project with a deliberately strict, layered frontend archite
 - **Filtering and sorting**: filter by status and sort by applied date. Both are kept in the URL, so they survive a refresh and work with the back button.
 - **Validation**: required fields, valid URLs, whole-euro salaries, and a minimum salary that can't exceed the maximum.
 - **Feedback**: short notifications confirm each action, such as saving, deleting and signing in.
+- **Light and dark themes**: choose light, dark, or follow the system setting. The choice is remembered, and the page never flashes the wrong theme on load.
 - **Private by default**: each user only ever sees their own applications, enforced by the database.
 
 ## Tech stack
@@ -57,11 +58,12 @@ flowchart LR
 
 - **Security lives in the database.** Every table has Row Level Security policies (`user_id = auth.uid()`). Frontend checks such as the protected route are for user experience only.
 - **History is recorded by a trigger.** A Postgres trigger writes to `application_events` whenever an application's status changes, so the frontend can't forget or fake it.
-- **Server state and client state are kept apart.** Data from Supabase lives in TanStack Query. UI state, such as which modal is open, lives in components. React Context is used only for the auth session.
+- **Server state and client state are kept apart.** Data from Supabase lives in TanStack Query. UI state, such as which modal is open, lives in components. React Context is used only for the auth session and the theme.
 - **The Zod schema is the source of the form's types.** Form input and output types are derived from it, and its output type matches the domain type exactly.
 - **Filter and sort live in the URL**, not in component state, so a filtered view can be refreshed and bookmarked.
 - **Code is split so visitors download only what they use.** Each page loads separately, and the form, with Zod and react-hook-form, loads only when it is first opened.
 - **Times and dates are formatted differently on purpose.** An applied date is a calendar date, shown the same everywhere; a status change is a moment, shown in the viewer's own time zone.
+- **Colours are named by role, not by value.** Components use classes like `bg-surface` and `text-muted`; each theme defines those roles once, in `index.css`. A small inline script in `index.html` applies the saved theme before the page is drawn.
 - **Schema changes are versioned migrations** in `supabase/migrations/`, never manual dashboard edits.
 
 ## Data model
@@ -166,4 +168,4 @@ supabase/
 - [ ] Contacts and interview rounds
 - [ ] Kanban board with drag and drop between statuses
 - [ ] Stats, such as response rate and time to first reply
-- [ ] Light and dark theme toggle
+- [x] Light and dark theme toggle

@@ -27,7 +27,7 @@ This is a learning project. I want to build it myself, with your guidance.
 - **Components never import Supabase.** Only `src/services/*` calls `supabase.from(...)` or `supabase.auth`.
 - Services are plain async functions with no React. They map DB rows (`applied_at`) to domain types (`appliedAt`).
 - Hooks wrap services with TanStack Query (`useQuery` / `useMutation`) and own loading, error and cache state.
-- Server state lives in TanStack Query. Client state (e.g. is the modal open) lives in components; React Context is used only for the auth session.
+- Server state lives in TanStack Query. Client state (e.g. is the modal open) lives in components; React Context is used only for the auth session and the theme.
 - The create/edit form is a modal, not a separate route. Forms use react-hook-form + Zod; the Zod schema is the source of the form types.
 - Security is enforced by Supabase RLS (`user_id = auth.uid()`); frontend checks are only UX.
 - Schema changes go in versioned SQL migration files, not manual dashboard edits.
