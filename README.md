@@ -6,7 +6,10 @@ Built as a learning project with a deliberately strict, layered frontend archite
 
 **Live demo: [jobtrapper.netlify.app](https://jobtrapper.netlify.app)**
 
-![The Job Trapper dashboard: applications as cards with status badges, filter pills and a sort control](docs/job-trapper-screenshot.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/job-trapper-dark-screenshot.png" />
+  <img src="docs/job-trapper-light-screenshot.png" alt="The Job Trapper dashboard: application cards with status badges, an open status timeline, filter pills and a sort control." />
+</picture>
 
 > **Status:** core features are complete and deployed. Version 2 features are next.
 
