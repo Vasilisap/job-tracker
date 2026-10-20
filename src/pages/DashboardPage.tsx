@@ -10,7 +10,8 @@ import { useAuth } from "../hooks/useAuth";
 import { signOut } from "../services/auth.service";
 import type { Application } from "../types/applications";
 import ConfirmDialog from "../components/ConfirmDialog";
-import { useSearchParams } from "react-router";
+import { Link, useSearchParams } from "react-router";
+import Logo from "../components/Logo";
 import {
   filterAndSort,
   parseListParams,
@@ -140,7 +141,12 @@ export default function DashboardPage() {
     <div className="min-h-screen">
       <header className="sticky top-0 z-10 border-b border-line bg-page/80 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
-          <span className="text-lg font-bold text-fg-strong">Job Trapper</span>
+          <Link
+            to="/app"
+            className="rounded-lg focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
+          >
+            <Logo />
+          </Link>
 
           <div className="flex items-center gap-3">
             <ThemeToggle />

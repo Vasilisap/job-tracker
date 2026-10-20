@@ -1,23 +1,24 @@
-import ThemeToggle from "../components/ThemeToggle";
 import { useState, type SyntheticEvent } from "react";
+import { Link, useSearchParams } from "react-router";
+import { toast } from "sonner";
+import Logo from "../components/Logo";
+import ThemeToggle from "../components/ThemeToggle";
 import {
-  signInWithPassword,
   signInWithGoogle,
+  signInWithPassword,
   signUp,
 } from "../services/auth.service";
-import { useAuth } from "../hooks/useAuth";
-import { Navigate } from "react-router";
-import { FullPageSpinner } from "../components/Spinner";
-import { toast } from "sonner";
 
 export default function LoginPage() {
-  const { session, loading } = useAuth();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [mode, setMode] = useState<"signIn" | "signUp">("signIn");
+  // "Get started" links here with ?mode=signup, so the form opens on sign-up
+  const [searchParams] = useSearchParams();
+  const [mode, setMode] = useState<"signIn" | "signUp">(() =>
+    searchParams.get("mode") === "signup" ? "signUp" : "signIn",
+  );
   const [notice, setNotice] = useState<string | null>(null);
 
   async function handleSubmit(e: SyntheticEvent<HTMLFormElement>) {
@@ -59,9 +60,6 @@ export default function LoginPage() {
     }
   }
 
-  if (loading) return <FullPageSpinner />;
-  if (session) return <Navigate to="/" replace />;
-
   const submitLabel =
     mode === "signIn"
       ? submitting
@@ -72,12 +70,20 @@ export default function LoginPage() {
         : "Create account";
 
   return (
-    <main className="relative flex min-h-screen items-center justify-center px-4">
+    <main className="relative flex min-h-screen items-center justify-center px-4 py-20">
+      <Link
+        to="/"
+        className="absolute top-4 left-4 rounded-lg focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
+      >
+        <Logo />
+      </Link>
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
       <div className="w-full max-w-sm rounded-2xl bg-surface p-8 shadow-lg ring-1 ring-line">
-        <h1 className="text-2xl font-bold text-fg-strong">Job Trapper</h1>
+        <h1 className="text-2xl font-bold text-fg-strong">
+          {mode === "signIn" ? "Welcome back" : "Create your account"}
+        </h1>
         <p className="mt-1 text-sm text-muted">
           {mode === "signIn" ? "Sign in" : "Create an account"} to track your
           applications.
